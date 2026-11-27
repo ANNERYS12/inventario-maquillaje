@@ -157,3 +157,18 @@ tr:hover td {
   color: var(--rosa);
   font-weight: 600;
 }
+.enlace-tabla {
+  color: var(--rosa);
+  font-weight: 600;
+  margin-right: 12px;
+}
+
+.peligro {
+  background: #c62828;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.peligro:hover {
+  background: #8e0000;
+}

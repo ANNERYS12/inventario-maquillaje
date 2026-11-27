@@ -1,0 +1,49 @@
+<div class="tarjeta">
+  @if (noEncontrado) {
+    <h2>Producto no encontrado</h2>
+    <p>No existe un producto con ese ID.</p>
+    <a routerLink="/productos" class="enlace">Volver a productos</a>
+  } @else if (actualizado) {
+    <h2>✔ Producto actualizado</h2>
+    <p class="mensaje">Los cambios se guardaron correctamente.</p>
+
+    <div class="confirmacion">
+      <p><strong>ID:</strong> {{ id }}</p>
+      <p><strong>Nombre:</strong> {{ nombre }}</p>
+      <p><strong>Categoría:</strong> {{ categoria }}</p>
+      <p><strong>Precio:</strong> {{ precio }}</p>
+      <p><strong>Stock:</strong> {{ stock }}</p>
+    </div>
+
+    <a routerLink="/productos" class="enlace">Volver a productos</a>
+  } @else {
+    <h2>Editar producto #{{ id }}</h2>
+
+    <label>Nombre
+      <input [(ngModel)]="nombre" />
+    </label>
+
+    <p class="etiqueta">Categoría</p>
+    <div class="chips">
+      @for (c of categorias; track c) {
+        <button type="button" class="chip" [class.activo]="categoria === c" (click)="seleccionar(c)">
+          {{ c }}
+        </button>
+      }
+    </div>
+
+    <label>Precio
+      <input type="number" [(ngModel)]="precio" />
+    </label>
+
+    <label>Stock
+      <input type="number" [(ngModel)]="stock" />
+    </label>
+
+    <button (click)="guardar()">Guardar cambios</button>
+    <a routerLink="/productos" class="enlace">Cancelar</a>
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+  }
+</div>
