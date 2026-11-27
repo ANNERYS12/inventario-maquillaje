@@ -9,29 +9,44 @@ import { ProductoService } from '../../services/producto.service';
 })
 export class RegistrarProductoComponent {
   nombre = '';
-  categoria = 'Rostro';
-  precio = 0;
-  stock = 0;
+  categoria = '';
+  precio: number | null = null;
+  stock: number | null = null;
   mensaje = '';
+  error = false;
 
   categorias = ['Rostro', 'Ojos', 'Labios', 'Uñas', 'Cuidado de la piel'];
 
   constructor(private productoService: ProductoService) {}
 
+  seleccionar(c: string): void {
+    this.categoria = c;
+  }
+
   guardar(): void {
-    if (!this.nombre.trim() || this.precio < 0 || this.stock < 0) {
-      this.mensaje = 'Revisa los datos: el nombre es obligatorio y los números no pueden ser negativos.';
+    if (
+      !this.nombre.trim() ||
+      !this.categoria ||
+      this.precio === null || this.precio < 0 ||
+      this.stock === null || this.stock < 0
+    ) {
+      this.mensaje = 'Completa todos los campos. El precio y el stock no pueden ser negativos.';
+      this.error = true;
       return;
     }
+
     this.productoService.agregar({
       nombre: this.nombre.trim(),
       categoria: this.categoria,
       precio: this.precio,
       stock: this.stock
     });
+
     this.mensaje = 'Producto registrado correctamente.';
+    this.error = false;
     this.nombre = '';
-    this.precio = 0;
-    this.stock = 0;
+    this.categoria = '';
+    this.precio = null;
+    this.stock = null;
   }
-} 
+}

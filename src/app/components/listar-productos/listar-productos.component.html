@@ -1,0 +1,42 @@
+<div class="tarjeta">
+  <h2>Productos</h2>
+
+  <label>Buscar
+    <input [(ngModel)]="textoBusqueda" placeholder="Busca por nombre o categoría" />
+  </label>
+
+  <div class="chips">
+    @for (c of categorias; track c) {
+      <button type="button" class="chip" [class.activo]="categoriaFiltro === c" (click)="filtrar(c)">
+        {{ c }}
+      </button>
+    }
+  </div>
+
+  @if (productosFiltrados.length === 0) {
+    <p>No hay productos para mostrar.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of productosFiltrados; track p.id) {
+          <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.categoria }}</td>
+            <td>{{ p.precio }}</td>
+            <td>{{ p.stock }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
