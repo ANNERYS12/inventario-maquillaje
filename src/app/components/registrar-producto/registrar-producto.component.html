@@ -1,27 +1,47 @@
 <div class="tarjeta">
-  <h2>Registrar producto</h2>
+  @if (registrado) {
+    <h2>✔ Producto registrado</h2>
+    <p class="mensaje">El producto se guardó correctamente.</p>
 
-  <label>Nombre
-    <input [(ngModel)]="nombre" placeholder="Ej: Labial mate rojo" />
-  </label>
+    <div class="confirmacion">
+      <p><strong>ID:</strong> {{ registrado.id }}</p>
+      <p><strong>Nombre:</strong> {{ registrado.nombre }}</p>
+      <p><strong>Categoría:</strong> {{ registrado.categoria }}</p>
+      <p><strong>Precio:</strong> {{ registrado.precio }}</p>
+      <p><strong>Stock:</strong> {{ registrado.stock }}</p>
+    </div>
 
-  <p class="etiqueta">Categoría</p>
-  <div class="chips">
-    @for (c of categorias; track c) {
-      <button type="button" class="chip" [class.activo]="categoria === c" (click)="seleccionar(c)">
-        {{ c }}
-      </button>
+    <p>Productos registrados en total: <strong>{{ total }}</strong></p>
+
+    <button (click)="nuevoRegistro()">Registrar nuevo producto</button>
+    <a routerLink="/productos" class="enlace">Ver productos</a>
+  } @else {
+    <h2>Registrar producto</h2>
+
+    <label>Nombre
+      <input [(ngModel)]="nombre" placeholder="Ej: Labial mate rojo" />
+    </label>
+
+    <p class="etiqueta">Categoría</p>
+    <div class="chips">
+      @for (c of categorias; track c) {
+        <button type="button" class="chip" [class.activo]="categoria === c" (click)="seleccionar(c)">
+          {{ c }}
+        </button>
+      }
+    </div>
+
+    <label>Precio
+      <input type="number" [(ngModel)]="precio" placeholder="Ej: 350" />
+    </label>
+
+    <label>Stock
+      <input type="number" [(ngModel)]="stock" placeholder="Ej: 20" />
+    </label>
+
+    <button (click)="guardar()">Guardar producto</button>
+    @if (error) {
+      <p class="error">{{ error }}</p>
     }
-  </div>
-
-  <label>Precio
-    <input type="number" [(ngModel)]="precio" placeholder="Ej: 350" />
-  </label>
-
-  <label>Stock
-    <input type="number" [(ngModel)]="stock" placeholder="Ej: 20" />
-  </label>
-
-  <button (click)="guardar()">Guardar producto</button>
-  <p [class.mensaje]="!error" [class.error]="error">{{ mensaje }}</p>
+  }
 </div>
