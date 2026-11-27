@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Producto } from '../../models/producto';
 import { ProductoService } from '../../services/producto.service';
 
@@ -23,6 +24,13 @@ export class ListarProductosComponent implements OnInit {
 
   filtrar(c: string): void {
     this.categoriaFiltro = c;
+  }
+
+  eliminar(p: Producto): void {
+    if (confirm(`¿Seguro que quieres eliminar "${p.nombre}"?`)) {
+      this.productoService.eliminar(p.id);
+      this.productos = this.productoService.obtenerTodos();
+    }
   }
 
   get productosFiltrados(): Producto[] {
