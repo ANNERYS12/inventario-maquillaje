@@ -1,0 +1,23 @@
+<h2>Registrar producto</h2>
+
+<p>
+  <label>Nombre: <input [(ngModel)]="nombre" /></label>
+</p>
+<p>
+  <label>Categoría:
+    <select [(ngModel)]="categoria">
+      @for (c of categoria; track c) {
+        <option [value]="c">{{ c }}</option>
+      }
+    </select>
+  </label>
+</p>
+<p>
+  <label>Precio: <input type="number" [(ngModel)]="precio" /></label>
+</p>
+<p>
+  <label>Stock: <input type="number" [(ngModel)]="stock" /></label>
+</p>
+
+<button (click)="guardar()">Guardar</button>
+<p>{{ mensaje }}</p>
