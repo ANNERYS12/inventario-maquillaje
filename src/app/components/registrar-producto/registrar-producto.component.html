@@ -1,23 +1,27 @@
-<h2>Registrar producto</h2>
+<div class="tarjeta">
+  <h2>Registrar producto</h2>
 
-<p>
-  <label>Nombre: <input [(ngModel)]="nombre" /></label>
-</p>
-<p>
-  <label>Categoría:
-    <select [(ngModel)]="categoria">
-      @for (c of categoria; track c) {
-        <option [value]="c">{{ c }}</option>
-      }
-    </select>
+  <label>Nombre
+    <input [(ngModel)]="nombre" placeholder="Ej: Labial mate rojo" />
   </label>
-</p>
-<p>
-  <label>Precio: <input type="number" [(ngModel)]="precio" /></label>
-</p>
-<p>
-  <label>Stock: <input type="number" [(ngModel)]="stock" /></label>
-</p>
 
-<button (click)="guardar()">Guardar</button>
-<p>{{ mensaje }}</p>
+  <p class="etiqueta">Categoría</p>
+  <div class="chips">
+    @for (c of categorias; track c) {
+      <button type="button" class="chip" [class.activo]="categoria === c" (click)="seleccionar(c)">
+        {{ c }}
+      </button>
+    }
+  </div>
+
+  <label>Precio
+    <input type="number" [(ngModel)]="precio" placeholder="Ej: 350" />
+  </label>
+
+  <label>Stock
+    <input type="number" [(ngModel)]="stock" placeholder="Ej: 20" />
+  </label>
+
+  <button (click)="guardar()">Guardar producto</button>
+  <p [class.mensaje]="!error" [class.error]="error">{{ mensaje }}</p>
+</div>
