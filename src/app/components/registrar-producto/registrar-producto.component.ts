@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { Producto } from '../../models/producto';
 import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-registrar-producto',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './registrar-producto.component.html'
 })
 export class RegistrarProductoComponent {
@@ -12,8 +14,10 @@ export class RegistrarProductoComponent {
   categoria = '';
   precio: number | null = null;
   stock: number | null = null;
-  mensaje = '';
-  error = false;
+  error = '';
+
+  registrado: Producto | null = null;
+  total = 0;
 
   categorias = ['Rostro', 'Ojos', 'Labios', 'Uñas', 'Cuidado de la piel'];
 
@@ -30,23 +34,26 @@ export class RegistrarProductoComponent {
       this.precio === null || this.precio < 0 ||
       this.stock === null || this.stock < 0
     ) {
-      this.mensaje = 'Completa todos los campos. El precio y el stock no pueden ser negativos.';
-      this.error = true;
+      this.error = 'Completa todos los campos. El precio y el stock no pueden ser negativos.';
       return;
     }
 
-    this.productoService.agregar({
+    this.registrado = this.productoService.agregar({
       nombre: this.nombre.trim(),
       categoria: this.categoria,
       precio: this.precio,
       stock: this.stock
     });
+    this.total = this.productoService.obtenerTodos().length;
+    this.error = '';
+  }
 
-    this.mensaje = 'Producto registrado correctamente.';
-    this.error = false;
+  nuevoRegistro(): void {
     this.nombre = '';
     this.categoria = '';
     this.precio = null;
     this.stock = null;
+    this.error = '';
+    this.registrado = null;
   }
 }
